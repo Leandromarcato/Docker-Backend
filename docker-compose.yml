@@ -1,0 +1,76 @@
+# version: '3'
+
+# services:
+#   base_de_datos:
+#    image: mysql:8.0.33
+#    container_name: my-db
+
+#    environment:
+#      MYSQL_ROOT_PASSWORD: mysecretpassword
+#      MYSQL_DATABASE: Leandro
+
+#    ports: 
+#     - 3306:3306
+
+#    volumes:
+#     - ./data:/var/lib/mysql 
+
+#   servidor: 
+#     container_name: servidor  
+
+#     build: 
+#       context: .
+
+#       dockerfile: Dockerfile
+    
+#     environment:
+#       PORT: 3000
+#       DATABASE_HOST: base_de_datos
+#       DATABASE_USERS: root
+#       DATABASE_PASSWORD: mysecretpassword
+#       DATABASE_NAME: Leandro
+    
+#     restart: always
+
+#     depends_on:
+#       - base_de_datos
+    
+#     ports:
+#      3000:3000
+
+#     volumes:
+#       - ./servidor:/servidor
+
+
+version: '3'
+
+services:
+  base_de_datos:
+    image: mysql:8.0.33
+    container_name: my-db
+    environment:
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+      MYSQL_DATABASE: Leandro
+    ports: 
+      - 3306:3306
+    volumes:
+      - ./data:/var/lib/mysql
+
+  servidor: 
+    container_name: servidor
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3000
+      DATABASE_HOST: base_de_datos
+      DATABASE_USERS: root
+      DATABASE_PASSWORD: mysecretpassword
+      DATABASE_NAME: Leandro
+    restart: always
+    depends_on:
+      - base_de_datos
+    ports:
+      - 3000:3000
+    volumes:
+      - ./servidor:/servidor
